@@ -1,0 +1,38 @@
+{
+  "name": "marko-webpack",
+  "version": "1.0.0",
+  "description": "Sample app that demonstrates the power of building UI components using Marko and Marko Widgets",
+  "main": "server.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "npm run build && node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js-samples/marko-webpack.git"
+  },
+  "author": "Patrick Steele-idem <pnidem@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marko-js-samples/marko-webpack/issues"
+  },
+  "homepage": "https://github.com/marko-js-samples/marko-webpack",
+  "dependencies": {
+    "app-module-path": "^1.0.1",
+    "browser-refresh-taglib": "^1.0.2",
+    "compression": "^1.2.0",
+    "css-loader": "^0.26.1",
+    "express": "^4.9.4",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "marko": "^4.0.0-beta.5",
+    "marko-loader": "^1.0.0",
+    "raptor-pubsub": "^1.0.5",
+    "raptor-util": "^1.0.9",
+    "serve-static": "^1.6.2",
+    "style-loader": "^0.13.1",
+    "svg-url-loader": "^1.1.0",
+    "webpack": "^1.14.0"
+  }
+}

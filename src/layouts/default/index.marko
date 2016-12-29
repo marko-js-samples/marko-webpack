@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <include(data.title)/>
+    </title>
+
+    <!--
+    <link> tags to include optimized CSS URLs will be included below:
+    -->
+    <include(data.styles)/>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <include(data.title)/>
+        </h1>
+
+        <main id="main">
+            <include(data.body)/>
+        </main>
+    </div>
+
+    <!--
+    <script> tags to include optimized JS URLs will be included below:
+    -->
+    <include(data.scripts)/>
+
+    <!--
+    If the browser is started using the browser-refresh launcher
+    then a <script> tag will be injected below to open a WebSocket
+    connection to the server
+    -->
+    <browser-refresh enabled=true/>
+</body>
+</html>
