@@ -10,10 +10,7 @@ module.exports = {
     },
     resolve: {
         extensions: ['', '.js', '.marko'],
-        modulesDirectories: [
-			'./',
-			'node_modules'
-		]
+        modulesDirectories: ['./', 'node_modules']
     },
     module: {
         loaders: [
