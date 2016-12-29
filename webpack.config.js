@@ -22,9 +22,9 @@ module.exports = {
                 loader: 'marko-loader'
             },
             {
-				test: /\.(less|css)$/,
-				loader: ExtractTextPlugin.extract("style?sourceMap", "css?sourceMap!less")
-			},
+                test: /\.(less|css)$/,
+                loader: ExtractTextPlugin.extract("style?sourceMap", "css?sourceMap!less")
+            },
             {
                 test: /\.svg/,
                 loader: 'svg-url-loader'
