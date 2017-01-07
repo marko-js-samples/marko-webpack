@@ -5,11 +5,9 @@ module.exports = {
         this.state = {
             checked: input.checked === true,
             checkboxClassName: input['class'] || input.checkboxClassName,
-            data: input.data
+            data: input.data,
+            body: input.label || input.renderBody
         };
-    },
-    getInitialBody: function(input) {
-        return input.label || input.renderBody;
     },
 
     isChecked: function() {
