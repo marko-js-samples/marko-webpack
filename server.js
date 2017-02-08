@@ -5,7 +5,7 @@ require('marko/node-require');
 function requireNoOp(module, filename) { /* no-op */ }
 
 require.extensions['.less'] = requireNoOp;
-
+require.extensions['.css'] = requireNoOp;
 
 var express = require('express');
 var compression = require('compression'); // Provides gzip compression for the HTTP response
@@ -27,8 +27,10 @@ app.use(compression());
 // Allow all of the generated files under "static" to be served up by Express
 app.use('/static', serveStatic(__dirname + '/static'));
 
+require('src/services/routes')(app);
+
 // Map the "/" route to the home page
-app.get('/', require('./src/pages/home'));
+app.get('/', require('src/pages/home'));
 
 app.listen(port, function(err) {
     if (err) {

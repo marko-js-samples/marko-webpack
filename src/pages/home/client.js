@@ -1,3 +1,3 @@
-require('../../global-style/style.less');
-require('../../components/app');
+require('src/global-style/style.less');
+require('src/components/app');
 require('marko/widgets');

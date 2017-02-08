@@ -1,8 +1,35 @@
-var variantClassName=(state.variant !== 'primary' && 'app-button-' + state.variant)
-var sizeClassName=(state.size !== 'normal' && 'app-button-' + state.size)
+import './style.less';
 
-<button class=['app-button', variantClassName, sizeClassName, state.className] onClick("handleClick")>
+class {
+    onInput(input) {
+        return {
+            size: input.size || 'normal',
+            variant: input.variant || 'primary',
+            body: input.label || input.renderBody,
+            className: input['class']
+        };
+    }
+
+    handleClick(event) {
+        // Every Widget instance is also an EventEmitter instance.
+        // We will emit a custom "click" event when a DOM click event
+        // is triggered
+        this.emit('click', {
+            event: event // Pass along the DOM event in case it is helpful to others
+        });
+    }
+}
+
+$ var variantClassName = (input.variant !== 'primary' && 'app-button-' + input.variant);
+$ var sizeClassName = (input.size !== 'normal' && 'app-button-' + input.size);
+
+<button class=[
+        'app-button',
+        variantClassName,
+        sizeClassName,
+        input.className
+    ] ${input['*']} onClick("handleClick")>
     <span>
-        <include(state.body)/>
+        <include(input.body)/>
     </span>
 </button>

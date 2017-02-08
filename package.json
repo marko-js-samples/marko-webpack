@@ -18,21 +18,25 @@
   },
   "homepage": "https://github.com/marko-js-samples/marko-webpack",
   "dependencies": {
-    "app-module-path": "^1.0.1",
-    "browser-refresh-taglib": "^1.0.2",
-    "compression": "^1.2.0",
+    "@inin/inindca-messages": "git+ssh://git@bitbucket.org/inindca/inindca-messages.git",
+    "browser-refresh-taglib": "^1.1.0",
+    "compression": "^1.6.2",
     "css-loader": "^0.26.1",
-    "express": "^4.9.4",
+    "express": "^4.14.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "less": "^2.7.2",
     "less-loader": "^2.2.3",
-    "marko": "^4.0.0-beta.14",
+    "marked": "^0.3.6",
+    "marko": "^4.0.0-rc.12",
     "marko-loader": "^1.0.0",
+    "purecss": "^0.6.2",
     "raptor-pubsub": "^1.0.5",
-    "raptor-util": "^1.0.9",
-    "serve-static": "^1.6.2",
+    "raptor-util": "^3.1.0",
+    "require-self-ref": "^2.0.1",
+    "serve-static": "^1.11.1",
     "style-loader": "^0.13.1",
     "svg-url-loader": "^1.1.0",
-    "webpack": "^1.14.0"
+    "webpack": "^1.14.0",
+    "whatwg-fetch": "^2.0.2"
   }
 }
