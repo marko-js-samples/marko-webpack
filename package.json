@@ -27,7 +27,7 @@
     "less": "^2.7.2",
     "less-loader": "^2.2.3",
     "marked": "^0.3.6",
-    "marko": "^4.0.0-rc.12",
+    "marko": "^4.0.0-rc.17",
     "marko-loader": "^1.0.0",
     "purecss": "^0.6.2",
     "raptor-pubsub": "^1.0.5",
