@@ -25,6 +25,14 @@ module.exports = {
             {
                 test: /\.svg/,
                 loader: 'svg-url-loader'
+            },
+            {
+                test: /\.(jpg|jpeg|gif|png)$/,
+                loader: 'file',
+                query: {
+                    name: 'static/images/[hash].[ext]',
+                    publicPath: '/'
+                }
             }
         ]
     },
