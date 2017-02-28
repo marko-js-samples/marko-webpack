@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/marko-js-samples/marko-webpack",
   "dependencies": {
-    "@inin/inindca-messages": "git+ssh://git@bitbucket.org/inindca/inindca-messages.git",
     "browser-refresh-taglib": "^1.1.0",
     "compression": "^1.6.2",
     "css-loader": "^0.26.1",
