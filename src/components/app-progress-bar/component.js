@@ -1,5 +1,3 @@
-require('./style.less');
-
 module.exports = {
     onInput: function(input) {
         var steps = input.steps || [];

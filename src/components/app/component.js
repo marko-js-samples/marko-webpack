@@ -1,5 +1,3 @@
-require('./style.less');
-
 var raptorPubsub = require('raptor-pubsub');
 var button = require('src/components/app-button');
 var checkbox = require('src/components/app-checkbox');

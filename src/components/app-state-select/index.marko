@@ -1,5 +1,3 @@
-import './style.css';
-
 static {
     var states = [
         {
@@ -26,6 +24,21 @@ class {
         } else {
             this.state.stateIndex = selectEl.selectedIndex - 1;
         }
+    }
+}
+
+style {
+    .state-icon {
+        width: 75px;
+        height: 50px;
+    }
+
+    .state-icon.CA {
+        background-image: url('./CA.png')
+    }
+
+    .state-icon.CO {
+        background-image: url('./CO.png')
     }
 }
 
