@@ -23,7 +23,7 @@
     "compression": "^1.6.2",
     "css-loader": "^0.26.1",
     "express": "^4.14.0",
-    "extract-text-webpack-plugin": "^1.0.1",
+    "extract-text-webpack-plugin": "2.1.0",
     "file-loader": "^0.10.1",
     "less": "^2.7.2",
     "less-loader": "^2.2.3",
@@ -36,8 +36,8 @@
     "require-self-ref": "^2.0.1",
     "serve-static": "^1.11.1",
     "style-loader": "^0.13.1",
-    "svg-url-loader": "^1.1.0",
-    "webpack": "^1.14.0",
+    "svg-url-loader": "2.0.2",
+    "webpack": "2.2.1",
     "whatwg-fetch": "^2.0.2"
   }
 }
