@@ -21,6 +21,8 @@
     ".cache": "explorerExcludedFiles",
     "node_modules": "explorerExcludedFiles",
     "npm-debug.log": "explorerExcludedFiles",
-    ".history": "explorerExcludedFiles"
+    ".history": "explorerExcludedFiles",
+    "yarn.lock": "explorerExcludedFiles",
+    ".vscode": "explorerExcludedFiles"
   }
 }

@@ -22,3 +22,5 @@
 npm-debug.log
 
 .history
+yarn.lock
+.vscode
