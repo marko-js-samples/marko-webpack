@@ -1,0 +1,28 @@
+{
+  "vsicons.presets.angular": false,
+  "files.exclude": {
+    "*.seed": "explorerExcludedFiles",
+    "*.log": "explorerExcludedFiles",
+    "*.csv": "explorerExcludedFiles",
+    "*.dat": "explorerExcludedFiles",
+    "*.out": "explorerExcludedFiles",
+    "*.pid": "explorerExcludedFiles",
+    "*.gz": "explorerExcludedFiles",
+    "*.marko.js": "explorerExcludedFiles",
+    "*.sublime-workspace": "explorerExcludedFiles",
+    "*.sublime-project": "explorerExcludedFiles",
+    "*.original": "explorerExcludedFiles",
+    "lib-cov": "explorerExcludedFiles",
+    "pids": "explorerExcludedFiles",
+    "logs": "explorerExcludedFiles",
+    "results": "explorerExcludedFiles",
+    "static": "explorerExcludedFiles",
+    "build": "explorerExcludedFiles",
+    ".cache": "explorerExcludedFiles",
+    "node_modules": "explorerExcludedFiles",
+    "npm-debug.log": "explorerExcludedFiles",
+    ".history": "explorerExcludedFiles",
+    "yarn.lock": "explorerExcludedFiles",
+    ".vscode": "explorerExcludedFiles"
+  }
+}

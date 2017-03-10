@@ -20,3 +20,7 @@
 /node_modules
 
 npm-debug.log
+
+.history
+yarn.lock
+.vscode

@@ -9,8 +9,8 @@ module.exports = {
         filename: "static/bundle.js"
     },
     resolve: {
-        extensions: ['', '.js', '.marko'],
-        modulesDirectories: ['./', 'node_modules']
+        extensions: ['.js', '.marko'],
+        modules: ['./', 'node_modules']
     },
     module: {
         loaders: [
@@ -20,7 +20,10 @@ module.exports = {
             },
             {
                 test: /\.(less|css)$/,
-                loader: ExtractTextPlugin.extract("style?sourceMap", "css?sourceMap!less")
+                loader: ExtractTextPlugin.extract({
+                    fallback: "style-loader?sourceMap",
+                    use: "css-loader?sourceMap!less-loader"
+                })
             },
             {
                 test: /\.svg/,
@@ -28,7 +31,7 @@ module.exports = {
             },
             {
                 test: /\.(jpg|jpeg|gif|png)$/,
-                loader: 'file',
+                loader: 'file-loader',
                 query: {
                     name: 'static/images/[hash].[ext]',
                     publicPath: '/'
@@ -38,12 +41,12 @@ module.exports = {
     },
     plugins: [
             // Avoid publishing files when compilation failed:
-            new webpack.NoErrorsPlugin(),
-
-            // Aggressively remove duplicate modules:
-            new webpack.optimize.DedupePlugin(),
+            new webpack.NoEmitOnErrorsPlugin(),
 
             // Write out CSS bundle to its own file:
-            new ExtractTextPlugin('static/bundle.css', { allChunks: true })
+            new ExtractTextPlugin({
+                filename: 'static/bundle.css',
+                allChunks: true
+            })
     ]
 };
