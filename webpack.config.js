@@ -9,41 +9,40 @@ module.exports = {
         filename: "static/bundle.js"
     },
     resolve: {
-        extensions: ['', '.js', '.marko'],
-        modulesDirectories: ['./', 'node_modules']
+        extensions: ['.js', '.marko'],
+        modules: ['./', 'node_modules']
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.marko$/,
-                loader: 'marko-loader'
+                use: 'marko-loader'
             },
             {
                 test: /\.(less|css)$/,
-                loader: ExtractTextPlugin.extract("style?sourceMap", "css?sourceMap!less")
+                use: ExtractTextPlugin.extract({ fallback: "style-loader?sourceMap", use: ["css-loader?sourceMap", "less-loader"] })
             },
             {
                 test: /\.svg/,
-                loader: 'svg-url-loader'
+                use: 'svg-url-loader'
             },
             {
                 test: /\.(jpg|jpeg|gif|png)$/,
-                loader: 'file',
-                query: {
-                    name: 'static/images/[hash].[ext]',
-                    publicPath: '/'
-                }
+                use: {
+                  loader: 'file-loader',
+                  options: {
+                      name: 'static/images/[hash].[ext]',
+                      publicPath: '/'
+                  }
+                },
             }
         ]
     },
     plugins: [
             // Avoid publishing files when compilation failed:
-            new webpack.NoErrorsPlugin(),
-
-            // Aggressively remove duplicate modules:
-            new webpack.optimize.DedupePlugin(),
+            new webpack.NoEmitOnErrorsPlugin(),
 
             // Write out CSS bundle to its own file:
-            new ExtractTextPlugin('static/bundle.css', { allChunks: true })
+            new ExtractTextPlugin({ filename: 'static/bundle.css', allChunks: true })
     ]
 };
