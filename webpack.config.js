@@ -15,7 +15,7 @@ module.exports = {
         modules: ['./', 'node_modules']
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.marko$/,
                 loader: 'marko-loader'
@@ -40,7 +40,7 @@ module.exports = {
     },
     plugins: [
             // Avoid publishing files when compilation failed:
-            new webpack.NoErrorsPlugin(),
+            new webpack.NoEmitOnErrorsPlugin(),
 
             // Write out CSS bundle to its own file:
             new ExtractTextPlugin({ filename: 'static/bundle.css', allChunks: true })
