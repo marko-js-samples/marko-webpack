@@ -18,12 +18,26 @@ var serveStatic = require('serve-static');
 require('marko/browser-refresh').enable();
 
 var app = express();
-
 var port = process.env.PORT || 8080;
+
+if (process.env.NODE_ENV ===  'development') {
+    var webpack = require('webpack');
+    var webpackConfig = require('./webpack.config');
+    var compiler = webpack(webpackConfig);
+
+    // Step 2: Attach the dev middleware to the compiler & the server
+    app.use(require("webpack-dev-middleware")(compiler, {
+        logLevel: 'warn', publicPath: webpackConfig.output.publicPath
+    }));
+
+    // Step 3: Attach the hot middleware to the compiler & the server
+    app.use(require("webpack-hot-middleware")(compiler, {
+        log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
+    }));
+} 
 
 // Enable gzip compression for all HTTP responses
 app.use(compression());
-
 // Allow all of the generated files under "static" to be served up by Express
 app.use('/static', serveStatic(__dirname + '/static'));
 
