@@ -9,6 +9,7 @@
 *.sublime-workspace
 *.sublime-project
 *.original
+*.vscode
 
 /lib-cov
 /pids

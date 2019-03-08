@@ -56,14 +56,14 @@ const serverConfig = {
     filename: "main.js",
     libraryTarget: "commonjs2",
     path: path.join(__dirname, "dist/server"),
-    devtoolModuleFilenameTemplate: info => path.relative(serverConfig.output.path, info.absoluteResourcePath),
+    devtoolModuleFilenameTemplate: info =>
+      path.relative(serverConfig.output.path, info.absoluteResourcePath)
   },
   plugins: [
     new CleanPlugin(),
     new webpack.DefinePlugin({
       "process.browser": undefined,
-      "process.env.BUNDLE": true,
-      "process.env.NODE_ENV": JSON.stringify(NODE_ENV)
+      "process.env.BUNDLE": true
     }),
     new webpack.BannerPlugin({
       banner: 'require("source-map-support").install();',
@@ -79,7 +79,6 @@ const browserConfig = {
   ...baseConfig,
   name: "Browser",
   target: "web",
-  entry: markoPlugin.emptyEntry,
   output: {
     ...baseConfig.output,
     filename: "[name].[hash:8].js",
@@ -88,8 +87,7 @@ const browserConfig = {
   plugins: [
     new CleanPlugin(),
     new webpack.DefinePlugin({
-      "process.browser": true,
-      "process.env.NODE_ENV": JSON.stringify(NODE_ENV)
+      "process.browser": true
     }),
     new CSSExtractPlugin({
       filename: "[name].[hash:8].css"
@@ -98,6 +96,7 @@ const browserConfig = {
   ],
   devServer: {
     inline: false,
+    stats: "minimal",
     proxy: {
       "**": {
         target: true,
