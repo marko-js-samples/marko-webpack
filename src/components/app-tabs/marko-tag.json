@@ -1,5 +1,5 @@
 {
-    "@tabs <tab>[]": {
-        "@label": "string"
-    }
+  "@tabs <tab>[]": {
+    "@label": "string"
+  }
 }

@@ -1,8 +1,8 @@
 import express from "express";
 import compression from "compression";
 import serveStatic from "serve-static";
-import initServices from "./src/services/routes";
-import HomePage from "./src/pages/home";
+import initServices from "./services/routes";
+import HomePage from "./pages/home";
 
 const app = express();
 const port = process.env.PORT || 8080;

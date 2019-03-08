@@ -1,47 +1,51 @@
 class {
-    onInput(input) {
-        var activeIndex = 0;
+  onInput(input) {
+    var activeIndex = 0;
 
-        var tabs = input.tabs;
+    var tabs = input.tabs;
 
-        if (tabs) {
-            tabs.forEach(function(tab, i) {
-                if (tab.active) {
-                    activeIndex = i;
-                }
-            });
+    if (tabs) {
+      tabs.forEach(function(tab, i) {
+        if (tab.active) {
+          activeIndex = i;
         }
-
-        this.state = {
-            activeIndex: activeIndex
-        };
+      });
     }
 
-    setActiveIndex(newActiveIndex) {
-        this.state.activeIndex = newActiveIndex;
-    }
+    this.state = {
+      activeIndex: activeIndex
+    };
+  }
 
-    handleTabClick(tabIndex, event) {
-        this.setActiveIndex(tabIndex);
-        event.preventDefault();
-    }
+  setActiveIndex(newActiveIndex) {
+    this.state.activeIndex = newActiveIndex;
+  }
+
+  handleTabClick(tabIndex, event) {
+    this.setActiveIndex(tabIndex);
+    event.preventDefault();
+  }
 }
 
 <div class="app-tabs">
-    <ul class="tab-nav">
-        <li for(tabIndex, tab in input.tabs)
-            class=['tab', (tabIndex === state.activeIndex) && 'active']>
-
-            <a href="#" onClick("handleTabClick", tabIndex)>
-                <include(tab.label)/>
-            </a>
-        </li>
-    </ul>
-    <div style="clear: both"/>
-    <div class="tab-panes">
-        <div for(tabIndex, tab in input.tabs)
-            class=['tab-pane', (tabIndex === state.activeIndex) && 'active']>
-            <include(tab.renderBody)/>
-        </div>
-    </div>
+  <ul class="tab-nav">
+    <for|tab, i| of=input.tabs>
+      <li class=["tab", i === state.activeIndex && "active"]>
+        <a href="#" onClick("handleTabClick", i)>
+          <if(typeof tab.label === "string")>${tab.label}</if>
+          <else>
+            <${tab.label}/>
+          </else>
+        </a>
+      </li>
+    </for>
+  </ul>
+  <div style="clear: both"/>
+  <div class="tab-panes">
+    <for|tab, i| of=input.tabs>
+      <div class=["tab-pane", i === state.activeIndex && "active"]>
+        <${tab.renderBody}/>
+      </div>
+    </for>
+  </div>
 </div>
