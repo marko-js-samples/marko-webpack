@@ -12,6 +12,9 @@ const markoPlugin = new MarkoPlugin();
 
 const baseConfig = {
   mode,
+  output: {
+    publicPath: "/static/"
+  },
   resolve: {
     extensions: [".js", ".json", ".marko"]
   },
@@ -34,21 +37,24 @@ const baseConfig = {
         loader: "file-loader"
       }
     ]
-  }
+  },
+  plugins: []
 }
 
 const serverConfig = {
+  ...baseConfig,
   name: "Server",
   entry: "./src/index.js",
   target: "async-node",
   externals: [/^(?!marko)[^./!]/],
   output: {
+    ...baseConfig.output,
+    filename: "main.js",
     libraryTarget: "commonjs2",
-    publicPath: "/static/",
-    path: path.join(__dirname, "dist/server"),
-    filename: "main.js"
+    path: path.join(__dirname, "dist/server")
   },
   plugins: [
+    ...baseConfig.plugins,
     new webpack.DefinePlugin({
       "process.browser": undefined,
       "process.env.BUNDLE": true,
@@ -57,20 +63,21 @@ const serverConfig = {
     new IgnoreEmitPlugin(/\.(css|jpg|jpeg|gif|png)$/),
     spawnedServer,
     markoPlugin.server
-  ],
-  ...baseConfig
+  ]
 };
 
 const browserConfig = {
+  ...baseConfig,
   name: "Browser",
   target: "web",
   entry: markoPlugin.emptyEntry,
   output: {
-    publicPath: "/static/",
+    ...baseConfig.output,
+    filename: "[name].[hash:10].js",
     path: path.join(__dirname, "dist/client"),
-    filename: "[name].[hash:10].js"
   },
   plugins: [
+    ...baseConfig.plugins,
     new webpack.DefinePlugin({
       "process.browser": true,
       "process.env.NODE_ENV": JSON.stringify(NODE_ENV)
@@ -95,8 +102,7 @@ const browserConfig = {
         else spawnedServer.once("listening", next);
       });
     }
-  },
-  ...baseConfig
+  }
 };
 
 if (mode === "production") {
