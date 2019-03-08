@@ -4,6 +4,7 @@ const MarkoPlugin = require("@marko/webpack/plugin").default;
 const CSSExtractPlugin = require("mini-css-extract-plugin");
 const IgnoreEmitPlugin = require("ignore-emit-webpack-plugin");
 const SpawnServerPlugin = require("spawn-server-webpack-plugin");
+const CleanPlugin = require("clean-webpack-plugin");
 
 const { NODE_ENV } = process.env;
 const mode = NODE_ENV ? "production" : "development";
@@ -12,6 +13,7 @@ const markoPlugin = new MarkoPlugin();
 
 const baseConfig = {
   mode,
+  devtool: "source-map",
   output: {
     publicPath: "/static/"
   },
@@ -37,28 +39,35 @@ const baseConfig = {
         loader: "file-loader"
       }
     ]
-  },
-  plugins: []
-}
+  }
+};
 
 const serverConfig = {
   ...baseConfig,
   name: "Server",
-  entry: "./src/index.js",
   target: "async-node",
+  entry: "./src/index.js",
   externals: [/^(?!marko)[^./!]/],
+  optimization: {
+    minimize: false
+  },
   output: {
     ...baseConfig.output,
     filename: "main.js",
     libraryTarget: "commonjs2",
-    path: path.join(__dirname, "dist/server")
+    path: path.join(__dirname, "dist/server"),
+    devtoolModuleFilenameTemplate: info => path.relative(serverConfig.output.path, info.absoluteResourcePath),
   },
   plugins: [
-    ...baseConfig.plugins,
+    new CleanPlugin(),
     new webpack.DefinePlugin({
       "process.browser": undefined,
       "process.env.BUNDLE": true,
       "process.env.NODE_ENV": JSON.stringify(NODE_ENV)
+    }),
+    new webpack.BannerPlugin({
+      banner: 'require("source-map-support").install();',
+      raw: true
     }),
     new IgnoreEmitPlugin(/\.(css|jpg|jpeg|gif|png)$/),
     spawnedServer,
@@ -73,17 +82,17 @@ const browserConfig = {
   entry: markoPlugin.emptyEntry,
   output: {
     ...baseConfig.output,
-    filename: "[name].[hash:10].js",
-    path: path.join(__dirname, "dist/client"),
+    filename: "[name].[hash:8].js",
+    path: path.join(__dirname, "dist/client")
   },
   plugins: [
-    ...baseConfig.plugins,
+    new CleanPlugin(),
     new webpack.DefinePlugin({
       "process.browser": true,
       "process.env.NODE_ENV": JSON.stringify(NODE_ENV)
     }),
     new CSSExtractPlugin({
-      filename: "[name].[hash:10].css"
+      filename: "[name].[hash:8].css"
     }),
     markoPlugin.browser
   ],
