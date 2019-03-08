@@ -1,11 +1,16 @@
+import imgCO from "./CO.png";
+import imgCA from "./CA.png";
+
 static const states = [
   {
     name: "Colorado",
-    value: "CO"
+    value: "CO",
+    img: imgCO
   },
   {
     name: "California",
-    value: "CA"
+    value: "CA",
+    img: imgCA
   }
 ];
 
@@ -44,5 +49,6 @@ style {
   </select>
   <if(state.stateIndex != null)>
     <div>You selected: ${states[state.stateIndex].value}</div>
+    <img src=states[state.stateIndex].img/>
   </if>
 </div>
