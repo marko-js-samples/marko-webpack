@@ -84,6 +84,12 @@ const browserConfig = {
     filename: "[name].[hash:8].js",
     path: path.join(__dirname, "dist/client")
   },
+  optimization: {
+    splitChunks: {
+      // include all types of chunks
+      chunks: 'all'
+    }
+  },
   plugins: [
     new CleanPlugin(),
     new webpack.DefinePlugin({
