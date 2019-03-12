@@ -4,7 +4,6 @@ const MarkoPlugin = require("@marko/webpack/plugin").default;
 const CSSExtractPlugin = require("mini-css-extract-plugin");
 const IgnoreEmitPlugin = require("ignore-emit-webpack-plugin");
 const SpawnServerPlugin = require("spawn-server-webpack-plugin");
-const CleanPlugin = require("clean-webpack-plugin");
 
 const { NODE_ENV } = process.env;
 const mode = NODE_ENV ? "production" : "development";
@@ -60,7 +59,6 @@ const serverConfig = {
       path.relative(serverConfig.output.path, info.absoluteResourcePath)
   },
   plugins: [
-    new CleanPlugin(),
     new webpack.DefinePlugin({
       "process.browser": undefined,
       "process.env.BUNDLE": true
@@ -84,14 +82,7 @@ const browserConfig = {
     filename: "[name].[hash:8].js",
     path: path.join(__dirname, "dist/client")
   },
-  optimization: {
-    splitChunks: {
-      // include all types of chunks
-      chunks: 'all'
-    }
-  },
   plugins: [
-    new CleanPlugin(),
     new webpack.DefinePlugin({
       "process.browser": true
     }),
@@ -121,7 +112,13 @@ const browserConfig = {
 
 if (mode === "production") {
   const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-  browserConfig.plugins.push(new OptimizeCssAssetsPlugin());
+  const CleanPlugin = require("clean-webpack-plugin");
+
+  browserConfig.plugins.push(
+    new OptimizeCssAssetsPlugin(),
+    new CleanPlugin()
+  );
+  serverConfig.plugins.push(new CleanPlugin());
 }
 
 module.exports = [browserConfig, serverConfig];

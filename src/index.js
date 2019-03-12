@@ -1,5 +1,3 @@
-console.time("Server Startup");
-
 import express from "express";
 
 const app = express();
@@ -26,8 +24,6 @@ app.listen(port, err => {
   if (err) {
     throw err;
   }
-
-  console.timeEnd("Server Startup");
 
   if (port !== "0") {
     console.log(`Listening on port ${port}`);
