@@ -3,12 +3,11 @@ const webpack = require("webpack");
 const MarkoPlugin = require("@marko/webpack/plugin").default;
 const CSSExtractPlugin = require("mini-css-extract-plugin");
 const IgnoreEmitPlugin = require("ignore-emit-webpack-plugin");
-const SpawnServerPlugin = require("spawn-server-webpack-plugin");
 
 const { NODE_ENV } = process.env;
 const mode = NODE_ENV ? "production" : "development";
-const spawnedServer = new SpawnServerPlugin();
 const markoPlugin = new MarkoPlugin();
+let spawnedServer;
 
 const baseConfig = {
   mode,
@@ -67,8 +66,10 @@ const serverConfig = {
       banner: 'require("source-map-support").install();',
       raw: true
     }),
+    new CSSExtractPlugin({
+      filename: "[name].[hash:8].css"
+    }),
     new IgnoreEmitPlugin(/\.(css|jpg|jpeg|gif|png)$/),
-    spawnedServer,
     markoPlugin.server
   ]
 };
@@ -119,6 +120,13 @@ if (mode === "production") {
     new CleanPlugin()
   );
   serverConfig.plugins.push(new CleanPlugin());
+} else {
+  const SpawnServerPlugin = require("spawn-server-webpack-plugin");
+  spawnedServer = new SpawnServerPlugin();
+
+  serverConfig.plugins.push(
+    spawnedServer
+  );
 }
 
 module.exports = [browserConfig, serverConfig];
