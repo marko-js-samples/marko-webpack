@@ -3,11 +3,12 @@ const webpack = require("webpack");
 const MarkoPlugin = require("@marko/webpack/plugin").default;
 const CSSExtractPlugin = require("mini-css-extract-plugin");
 const IgnoreEmitPlugin = require("ignore-emit-webpack-plugin");
+const SpawnServerPlugin = require("spawn-server-webpack-plugin");
 
 const { NODE_ENV } = process.env;
 const mode = NODE_ENV ? "production" : "development";
+const spawnedServer = new SpawnServerPlugin();
 const markoPlugin = new MarkoPlugin();
-let spawnedServer;
 
 const baseConfig = {
   mode,
@@ -67,7 +68,7 @@ const serverConfig = {
       raw: true
     }),
     new CSSExtractPlugin({
-      filename: "[name].[hash:8].css"
+      filename: "[name].[contenthash:8].css"
     }),
     new IgnoreEmitPlugin(/\.(css|jpg|jpeg|gif|png)$/),
     markoPlugin.server
@@ -80,7 +81,7 @@ const browserConfig = {
   target: "web",
   output: {
     ...baseConfig.output,
-    filename: "[name].[hash:8].js",
+    filename: "[name].[contenthash:8].js",
     path: path.join(__dirname, "dist/client")
   },
   plugins: [
@@ -88,26 +89,14 @@ const browserConfig = {
       "process.browser": true
     }),
     new CSSExtractPlugin({
-      filename: "[name].[hash:8].css"
+      filename: "[name].[contenthash:8].css"
     }),
     markoPlugin.browser
   ],
   devServer: {
     inline: false,
     stats: "minimal",
-    proxy: {
-      "**": {
-        target: true,
-        router: () => `http://localhost:${spawnedServer.address.port}`
-      }
-    },
-    before(app) {
-      process.env.PORT = 0;
-      app.use((req, res, next) => {
-        if (spawnedServer.listening) next();
-        else spawnedServer.once("listening", next);
-      });
-    }
+    ...spawnedServer.devServerConfig
   }
 };
 
@@ -115,18 +104,17 @@ if (mode === "production") {
   const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
   const CleanPlugin = require("clean-webpack-plugin");
 
-  browserConfig.plugins.push(
-    new OptimizeCssAssetsPlugin(),
-    new CleanPlugin()
-  );
+  browserConfig.plugins.push(new OptimizeCssAssetsPlugin(), new CleanPlugin());
+  browserConfig.optimization = {
+    splitChunks: {
+      chunks: "all",
+      maxInitialRequests: 3
+    }
+  };
+
   serverConfig.plugins.push(new CleanPlugin());
 } else {
-  const SpawnServerPlugin = require("spawn-server-webpack-plugin");
-  spawnedServer = new SpawnServerPlugin();
-
-  serverConfig.plugins.push(
-    spawnedServer
-  );
+  serverConfig.plugins.push(spawnedServer);
 }
 
 module.exports = [browserConfig, serverConfig];
