@@ -46,7 +46,7 @@ const serverConfig = {
   name: "Server",
   target: "async-node",
   entry: "./src/index.js",
-  externals: [/^(?!marko)[^./!]/],
+  externals: [/^[^./!]/], // excludes node_modules
   optimization: {
     minimize: false
   },
@@ -70,7 +70,7 @@ const serverConfig = {
     new CSSExtractPlugin({
       filename: "[name].[contenthash:8].css"
     }),
-    new IgnoreEmitPlugin(/\.(css|jpg|jpeg|gif|png)$/),
+    new IgnoreEmitPlugin(/\.(css(\.map)?|jpg|jpeg|gif|png)$/),
     markoPlugin.server
   ]
 };
