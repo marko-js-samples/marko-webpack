@@ -7,7 +7,7 @@ const SpawnServerPlugin = require("spawn-server-webpack-plugin");
 
 const { NODE_ENV } = process.env;
 const mode = NODE_ENV ? "production" : "development";
-const spawnedServer = new SpawnServerPlugin();
+const spawnedServer = new SpawnServerPlugin({ args: ["--inspect"] });
 const markoPlugin = new MarkoPlugin();
 
 const baseConfig = {
