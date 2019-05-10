@@ -12,7 +12,7 @@ const markoPlugin = new MarkoPlugin();
 
 const baseConfig = {
   mode,
-  devtool: "source-map",
+  devtool: mode === "production" ? "source-map" : "inline-source-map",
   output: {
     publicPath: "/static/"
   },
@@ -54,9 +54,7 @@ const serverConfig = {
     ...baseConfig.output,
     filename: "main.js",
     libraryTarget: "commonjs2",
-    path: path.join(__dirname, "dist/server"),
-    devtoolModuleFilenameTemplate: info =>
-      path.relative(serverConfig.output.path, info.absoluteResourcePath)
+    path: path.join(__dirname, "dist/server")
   },
   plugins: [
     new webpack.DefinePlugin({
