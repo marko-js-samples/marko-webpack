@@ -1,49 +1,119 @@
-'use strict';
-var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require("path");
+const webpack = require("webpack");
+const MarkoPlugin = require("@marko/webpack/plugin").default;
+const CSSExtractPlugin = require("mini-css-extract-plugin");
+const IgnoreEmitPlugin = require("ignore-emit-webpack-plugin");
+const SpawnServerPlugin = require("spawn-server-webpack-plugin");
 
-module.exports = {
-    mode: process.env.NODE_ENV || "development",
-    // Add source map support
-    devtool: "#cheap-source-map",
-    entry: "./src/pages/home/client.js",
-    output: {
-        path: __dirname,
-        filename: "static/bundle.js"
-    },
-    resolve: {
-        extensions: ['.js', '.marko'],
-        modules: ['./', 'node_modules']
-    },
-    module: {
-        rules: [
-            {
-                test: /\.marko$/,
-                loader: 'marko-loader'
-            },
-            {
-                test: /\.(less|css)$/,
-                loader: ExtractTextPlugin.extract({ fallback: 'style-loader?sourceMap', use: 'css-loader?sourceMap!less-loader' })
-            },
-            {
-                test: /\.svg/,
-                loader: 'svg-url-loader'
-            },
-            {
-                test: /\.(jpg|jpeg|gif|png)$/,
-                loader: 'file-loader',
-                query: {
-                    name: 'static/images/[hash].[ext]',
-                    publicPath: '/'
-                }
-            }
-        ]
-    },
-    plugins: [
-            // Avoid publishing files when compilation failed:
-            new webpack.NoEmitOnErrorsPlugin(),
+const { NODE_ENV } = process.env;
+const mode = NODE_ENV ? "production" : "development";
+const spawnedServer = new SpawnServerPlugin({ args: ["--inspect"] });
+const markoPlugin = new MarkoPlugin();
 
-            // Write out CSS bundle to its own file:
-            new ExtractTextPlugin({ filename: 'static/bundle.css', allChunks: true })
+const baseConfig = {
+  mode,
+  devtool: mode === "production" ? "source-map" : "inline-source-map",
+  output: {
+    publicPath: "/static/"
+  },
+  resolve: {
+    extensions: [".js", ".json", ".marko"]
+  },
+  module: {
+    rules: [
+      {
+        test: /\.marko$/,
+        loader: "@marko/webpack/loader"
+      },
+      {
+        test: /\.(less|css)$/,
+        use: [CSSExtractPlugin.loader, "css-loader", "less-loader"]
+      },
+      {
+        test: /\.svg/,
+        loader: "svg-url-loader"
+      },
+      {
+        test: /\.(jpg|jpeg|gif|png)$/,
+        loader: "file-loader"
+      }
     ]
+  }
 };
+
+const serverConfig = {
+  ...baseConfig,
+  name: "Server",
+  target: "async-node",
+  entry: "./src/index.js",
+  externals: [/^[^./!]/], // excludes node_modules
+  optimization: {
+    minimize: false
+  },
+  output: {
+    ...baseConfig.output,
+    filename: "main.js",
+    libraryTarget: "commonjs2",
+    path: path.join(__dirname, "dist/server")
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.browser": undefined,
+      "process.env.BUNDLE": true
+    }),
+    new webpack.BannerPlugin({
+      banner: 'require("source-map-support").install();',
+      raw: true
+    }),
+    new CSSExtractPlugin({
+      filename: "[name].[contenthash:8].css"
+    }),
+    new IgnoreEmitPlugin(/\.(css(\.map)?|jpg|jpeg|gif|png)$/),
+    markoPlugin.server
+  ]
+};
+
+const browserConfig = {
+  ...baseConfig,
+  name: "Browser",
+  target: "web",
+  output: {
+    ...baseConfig.output,
+    filename: "[name].[contenthash:8].js",
+    path: path.join(__dirname, "dist/client")
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.browser": true
+    }),
+    new CSSExtractPlugin({
+      filename: "[name].[contenthash:8].css"
+    }),
+    markoPlugin.browser
+  ],
+  devServer: {
+    overlay: true,
+    stats: "minimal",
+    contentBase: false,
+    ...spawnedServer.devServerConfig
+  }
+};
+
+if (mode === "production") {
+  const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+  const CleanPlugin = require("clean-webpack-plugin");
+
+  browserConfig.plugins.push(new OptimizeCssAssetsPlugin(), new CleanPlugin());
+  browserConfig.optimization = {
+    splitChunks: {
+      chunks: "all",
+      maxInitialRequests: 3
+    }
+  };
+
+  serverConfig.plugins.push(new CleanPlugin());
+} else {
+  serverConfig.plugins.push(spawnedServer);
+}
+
+module.exports = [browserConfig, serverConfig];

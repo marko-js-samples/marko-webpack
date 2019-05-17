@@ -1,8 +1,0 @@
-{
-    "@height": "string",
-    "@width": "string",
-    "@static": "boolean",
-    "@class": "string",
-    "@lat": "number",
-    "@lng": "number"
-}

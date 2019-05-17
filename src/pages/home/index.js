@@ -1,6 +1,7 @@
-var template = require('./template.marko');
+import template from "./template.marko";
 
-module.exports = function(req, res) {
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.marko(template, {});
+export default (req, res) => {
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  template.render({}, res);
 };
+
