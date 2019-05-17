@@ -8,13 +8,13 @@
   },
   "dependencies": {
     "compression": "^1.7.4",
-    "express": "^4.16.4",
+    "express": "^4.17.0",
     "marked": "^0.6.2",
-    "marko": "^4.16.13",
+    "marko": "^4.16.15",
     "purecss": "^1.0.0",
     "raptor-pubsub": "^1.0.5",
     "raptor-util": "^3.1.0",
-    "serve-static": "^1.14.0",
+    "serve-static": "^1.14.1",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
@@ -25,14 +25,13 @@
     "ignore-emit-webpack-plugin": "^1.0.2",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
-    "marko-cli": "^6.0.7",
     "mini-css-extract-plugin": "^0.6.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "spawn-server-webpack-plugin": "^3.2.0",
     "svg-url-loader": "^2.3.2",
-    "webpack": "^4.30.0",
+    "webpack": "^4.31.0",
     "webpack-cli": "^3.3.2",
-    "webpack-dev-server": "^3.3.1"
+    "webpack-dev-server": "^3.4.1"
   },
   "homepage": "https://github.com/marko-js-samples/marko-webpack",
   "license": "MIT",

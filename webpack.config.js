@@ -92,8 +92,9 @@ const browserConfig = {
     markoPlugin.browser
   ],
   devServer: {
-    inline: false,
+    overlay: true,
     stats: "minimal",
+    contentBase: false,
     ...spawnedServer.devServerConfig
   }
 };
