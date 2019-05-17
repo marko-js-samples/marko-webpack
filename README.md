@@ -7,7 +7,7 @@ Marko Widgets: UI Components Playground w/ Webpack
 git clone https://github.com/marko-js-samples/marko-webpack.git
 cd marko-webpack
 npm install
-npm start:dev
+npm run start:dev
 ```
 
 ## Production Build
