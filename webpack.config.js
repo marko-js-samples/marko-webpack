@@ -50,7 +50,6 @@ module.exports = [
       minimize: false
     },
     output: {
-      filename: "main.js",
       libraryTarget: "commonjs2",
       path: path.join(__dirname, "dist/server")
     },
