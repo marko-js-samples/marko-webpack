@@ -1,6 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
-const CleanPlugin = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MarkoPlugin = require("@marko/webpack/plugin").default;
 const CSSExtractPlugin = require("mini-css-extract-plugin");
 const SpawnServerPlugin = require("spawn-server-webpack-plugin");
@@ -15,7 +15,6 @@ const spawnedServer = isDev && new SpawnServerPlugin();
 module.exports = [
   compiler({
     name: "Client",
-    target: "web",
     optimization: {
       splitChunks: {
         chunks: "all",
@@ -34,7 +33,6 @@ module.exports = [
     }: undefined,
     plugins: [
       new webpack.DefinePlugin({
-        "process.env.NODE_ENV": NODE_ENV,
         "process.browser": true
       }),
       new CSSExtractPlugin({
@@ -47,7 +45,6 @@ module.exports = [
   compiler({
     name: "Server",
     target: "async-node",
-    entry: "./src/index.js",
     externals: [/^[^./!]/], // excludes node_modules
     optimization: {
       minimize: false
@@ -59,7 +56,6 @@ module.exports = [
     },
     plugins: [
       new webpack.DefinePlugin({
-        "process.env.NODE_ENV": NODE_ENV,
         "process.browser": undefined,
         "process.env.BUNDLE": true
       }),
@@ -113,6 +109,6 @@ function compiler(config) {
         }
       ]
     },
-    plugins: [...config.plugins, isProd && new CleanPlugin()].filter(Boolean)
+    plugins: [...config.plugins, isProd && new CleanWebpackPlugin()].filter(Boolean)
   };
 }
