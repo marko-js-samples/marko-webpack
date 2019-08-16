@@ -37,18 +37,16 @@ style {
   }
 }
 
-<div>
-  <h3>Choose a state</h3>
-  <select onChange("handleSelectChange")>
-    <option value="" selected=(state.stateIndex == null)>(choose a state)</option>
-    <for|stateInfo, i| of=states>
-      <option value=stateInfo.value selected=(state.stateIndex === i)>
-        ${stateInfo.name}
-      </option>
-    </for>
-  </select>
-  <if(state.stateIndex != null)>
-    <div>You selected: ${states[state.stateIndex].value}</div>
-    <img src=states[state.stateIndex].img/>
-  </if>
-</div>
+<h3>Choose a state</h3>
+<select onChange("handleSelectChange")>
+  <option value="" selected=(state.stateIndex == null)>(choose a state)</option>
+  <for|stateInfo, i| of=states>
+    <option value=stateInfo.value selected=(state.stateIndex === i)>
+      ${stateInfo.name}
+    </option>
+  </for>
+</select>
+<if(state.stateIndex != null)>
+  <div>You selected: ${states[state.stateIndex].value}</div>
+  <img src=states[state.stateIndex].img/>
+</if>

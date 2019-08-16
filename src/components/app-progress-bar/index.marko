@@ -4,12 +4,10 @@
       class=["progress-step", i === state.activeIndex && "active"]
       onClick("handleStepClick", i)>
       <a href="#" class="progress-step">
-        <span>
-          <if(step.label)>${step.label}</if>
-          <else>
-            <${step}/>
-          </else>
-        </span>
+        <if(step.label)>${step.label}</if>
+        <else>
+          <${step}/>
+        </else>
         <div class="completion-icon"/>
       </a>
       <div class="progress-step-end">

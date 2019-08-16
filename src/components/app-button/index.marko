@@ -17,10 +17,8 @@ $ const sizeClassName = size !== "normal" && "app-button-" + size;
   ...input["*"]
   class=["app-button", variantClassName, sizeClassName, input["class"]]
   onClick("handleClick")>
-  <span>
-    <if(input.label)>${input.label}</if>
-    <else>
-      <${input}/>
-    </else>
-  </span>
+  <if(input.label)>${input.label}</if>
+  <else>
+    <${input}/>
+  </else>
 </button>
