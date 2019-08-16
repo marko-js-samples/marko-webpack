@@ -3,59 +3,36 @@
 body {
   font-family: @font-family;
   color: @font-color;
-  padding: 0;
   margin: 0;
 }
 
 * {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
-button::-moz-focus-inner,
-input::-moz-focus-inner {
+::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
 
 ul,
-ol {
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-form,
-img {
+ol,
+form {
   margin: 0;
   padding: 0;
 }
 
 img {
-  border-width: 0;
-}
-
-textarea,
-input {
-  font-size: 14px;
-  font-family: @font-family;
-}
-
-select {
-  margin: 0;
+  border-width: 0; // avoid border inside links
 }
 
 table {
   border-collapse: separate;
-  border-spacing: 0;
 }
 
 td {
   padding: 0;
-  margin: 0;
-  border-width: 0;
+  border: 0;
 }
 
 pre {
@@ -66,9 +43,8 @@ pre {
 h1,
 h2,
 h3 {
-  margin-top: 0;
+  margin: 0 0 0.2em;
   padding-top: 0.5em;
-  margin-bottom: 0.2em;
 }
 
 h1 {
@@ -76,7 +52,7 @@ h1 {
   color: @dark-color;
 
   a {
-    color: @dark-color;
+    color: inherit;
   }
 }
 
@@ -97,13 +73,12 @@ button,
 input,
 select,
 textarea {
-  font-size: 100%;
+  font: inherit;
   margin: 0;
 }
 
 button {
   padding: 0;
-  line-height: normal;
   border: 0;
 }
 
