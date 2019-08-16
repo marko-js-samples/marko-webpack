@@ -1,47 +1,37 @@
-var raptorPubsub = require("raptor-pubsub");
+const raptorPubsub = require("raptor-pubsub");
 
-var nextId = 0;
+let nextId = 0;
 
 module.exports = {
-  onInput(input) {
+  onInput({ notifications = [] }) {
     this.state = {
-      notifications: input.notifications || []
+      notifications
     };
   },
 
   onMount() {
-    var self = this;
+    const self = this;
 
-    this.subscribeTo(raptorPubsub).on("notification", function(eventArgs) {
-      var message = eventArgs.message;
-      self.addNotification(message);
-    });
+    this.subscribeTo(raptorPubsub).on("notification",
+      ({ message }) => self.addNotification(message)
+    );
   },
 
   addNotification(message) {
-    var notifications = this.state.notifications;
-    var notificationId = "notification" + nextId++;
-    notifications = [
-      {
-        message: message,
-        id: notificationId
-      }
-    ].concat(notifications);
+    const id = `notification${nextId++}`;
 
-    this.setState("notifications", notifications);
+    this.state.notifications = [{
+        message,
+        id
+      }].concat(this.state.notifications);
 
-    setTimeout(() => {
-      this.removeNotification(notificationId);
-    }, 3000);
+    setTimeout(() => this.removeNotification(id), 3000);
   },
 
   removeNotification(notificationId) {
-    var notificationWidget = this.getComponent(notificationId);
-    notificationWidget.fadeOut(() => {
-      var notifications = this.state.notifications.filter(notification => {
-        return notification.id !== notificationId;
-      });
-      this.setState("notifications", notifications);
+    this.getComponent(notificationId).fadeOut(() => {
+      this.state.notifications = this.state.notifications
+        .filter(({ id }) => id !== notificationId);
     });
   }
 };

@@ -1,38 +1,34 @@
 @import "../../global-style/variables.less";
 
 .app-button {
-  display: inline-block;
   border-radius: 8px;
   padding: 12px;
-  background-color: @button-bg;
+  margin: 0 0.5ch;
+  background: @button-bg;
   color: @button-fg;
-  transition-property: background-color;
-  transition-duration: 0.3s;
-  transition-timing-function: ease-out;
+  transition: background-color 0.3s ease-out;
 }
-
 
 .app-button:hover {
-  background-color: lighten(@button-bg, 10%);
+  background: lighten(@button-bg, 10%);
 }
+
 
 /* Variants */
 .app-button-secondary {
-  background-color: @button-secondary-bg;
+  background: @button-secondary-bg;
   color: @button-secondary-fg;
 }
 
 .app-button-secondary:hover {
-  background-color: lighten(@button-secondary-bg, 10%);
+  background: lighten(@button-secondary-bg, 10%);
 }
-
 
 
 /* Sizes */
 .app-button-small {
   font-size: 0.9em;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding: 6px 12px;
 }
 
 .app-button-large {

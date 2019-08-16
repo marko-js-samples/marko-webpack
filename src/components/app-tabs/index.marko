@@ -1,51 +1,28 @@
 class {
-  onInput(input) {
-    var activeIndex = 0;
-
-    var tabs = input.tabs;
-
-    if (tabs) {
-      tabs.forEach(function(tab, i) {
-        if (tab.active) {
-          activeIndex = i;
-        }
-      });
-    }
-
+  onInput({ tabs = [] }) {
     this.state = {
-      activeIndex: activeIndex
+      activeIndex: Math.max(0, tabs.findIndex(t => t.active))
     };
   }
 
-  setActiveIndex(newActiveIndex) {
-    this.state.activeIndex = newActiveIndex;
-  }
-
-  handleTabClick(tabIndex, event) {
-    this.setActiveIndex(tabIndex);
-    event.preventDefault();
+  handleTabClick(index) {
+    this.state.activeIndex = index;
   }
 }
 
-<div class="app-tabs">
-  <ul class="tab-nav">
-    <for|tab, i| of=input.tabs>
-      <li class=["tab", i === state.activeIndex && "active"]>
-        <a href="#" onClick("handleTabClick", i)>
-          <if(typeof tab.label === "string")>${tab.label}</if>
-          <else>
-            <${tab.label}/>
-          </else>
-        </a>
-      </li>
-    </for>
-  </ul>
-  <div style="clear: both"/>
-  <div class="tab-panes">
-    <for|tab, i| of=input.tabs>
-      <div class=["tab-pane", i === state.activeIndex && "active"]>
-        <${tab.renderBody}/>
-      </div>
-    </for>
+<ul.tab-nav>
+  <for|tab, i| of=input.tabs>
+    <li.tab>
+      <button.tab-button class=(i === state.activeIndex && "is-active") onClick("handleTabClick", i)>
+        ${tab.label}
+      </button>
+    </li>
+  </for>
+</ul>
+
+
+<for|tab, i| of=input.tabs>
+  <div.tab-pane hidden=(i !== state.activeIndex)>
+    <${tab.renderBody}/>
   </div>
-</div>
+</for>

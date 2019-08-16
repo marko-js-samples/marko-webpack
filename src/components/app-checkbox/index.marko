@@ -1,24 +1,12 @@
 class {
-  onInput(input) {
+  onInput({ checked }) {
     this.state = {
-      checked: input.checked === true
+      checked
     };
-  }
-
-  isChecked() {
-    return this.state.checked === true;
-  }
-
-  setChecked(newChecked) {
-    this.state.checked = newChecked;
   }
 
   toggle() {
     this.state.checked = !this.state.checked;
-  }
-
-  getData() {
-    return this.input.data;
   }
 
   handleClick() {
@@ -27,10 +15,8 @@ class {
 
     this.emit("toggle", {
       checked: newChecked,
-      data: this.getData(),
-      preventDefault: function() {
-        defaultPrevented = true;
-      }
+      data: this.input.data,
+      preventDefault: () => defaultPrevented = true
     });
 
     if (!defaultPrevented) {
@@ -39,21 +25,16 @@ class {
   }
 }
 
-<app-button
-  key="button"
-  class=[
-    "app-checkbox",
-    input["class"],
-    {
-      checked: state.checked
-    }
-  ]
+<app-button.app-checkbox
+  class=[ input["class"], state.checked && "app-checkbox--checked" ]
+  aria-pressed=state.checked.toString()
   onClick("handleClick")>
-  <span class="app-checkbox-icon"/>
-  <span key="checkboxLabel">
-    <if(input.label)>${input.label}</if>
-    <else>
-      <${input}/>
-    </else>
-  </span>
+  <span.app-checkbox-icon/>
+
+  <if(input.label)>
+    ${input.label}
+  </if>
+  <else>
+    <${input}/>
+  </else>
 </app-button>

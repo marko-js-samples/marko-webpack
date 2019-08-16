@@ -1,5 +1,8 @@
 {
   "@tabs <tab>[]": {
-    "@label": "string"
+    "@label": {
+      "type": "string",
+      "required": true
+    }
   }
 }

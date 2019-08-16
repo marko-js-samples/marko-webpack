@@ -1,148 +1,135 @@
-var raptorPubsub = require('raptor-pubsub');
-var button = require('../app-button');
-var checkbox = require('../app-checkbox');
-var progressBar = require('../app-progress-bar');
-var extend = require('raptor-util/extend');
+const raptorPubsub = require('raptor-pubsub');
+const button = require('../app-button');
+const checkbox = require('../app-checkbox');
+const progressBar = require('../app-progress-bar');
+const extend = require('raptor-util/extend');
 
-var buttonSizes = ['small', 'normal', 'large'];
-var buttonVariants = ['primary', 'secondary'];
+const buttonSizes = ['small', 'normal', 'large'];
+const buttonVariants = ['primary', 'secondary'];
 
-var currentButtonSize = 0;
-var currentButtonVariant = 0;
+let currentButtonSize = 0;
+let currentButtonVariant = 0;
 
 module.exports = {
-    onInput: function(input) {
-        var now = (new Date()).toString();
+  onInput: function({
+      buttonSize = 'small',
+      buttonVariant = 'primary',
+      checked = {
+        foo: false,
+        bar: true,
+        baz: false
+      } }) {
+    const now = Date().toString();
 
-        this.state = {
-            buttonSize: input.buttonSize || 'small',
-            buttonVariant: input.buttonVariant || 'primary',
-            overlayVisible: false,
-            checked: input.checked || {
-                foo: false,
-                bar: true,
-                baz: false
-            },
-            dynamicTabs: [
-                {
-                    timestamp: now
-                },
-                {
-                    timestamp: now
-                }
-            ]
-        };
-    },
+    this.state = {
+      buttonSize,
+      buttonVariant,
+      checked,
+      overlayVisible: false,
+      dynamicTabs: [
+        { timestamp: now },
+        { timestamp: now }
+      ]
+    };
+  },
 
-    handleCheckboxToggle: function(event, sourceWidget) {
-        // event.preventDefault();
+  handleCheckboxToggle: function({ data, checked }) {
+    const { name } = data;
 
-        var name = event.data.name;
+    // We treat complex objects stored in the state as immutable
+    // since only a shallow compare is done to see if the state
+    // has changed. Instead of modifying the "checked" object,
+    // we create a new object with the updated state of what is
+    // checked.
+    const newChecked = extend({}, this.state.checked);
+    newChecked[name] = checked;
+    this.state.checked = newChecked;
+  },
 
-        // We treat complex objects stored in the state as immutable
-        // since only a shallow compare is done to see if the state
-        // has changed. Instead of modifying the "checked" object,
-        // we create a new object with the updated state of what is
-        // checked.
-        var newChecked = extend({}, this.state.checked);
-        newChecked[name] = event.checked;
-        this.setState('checked', newChecked);
-    },
+  /**
+   * This demonstrates how to provide a custom state transition handler to avoid
+   * a full rerender.
+   */
+  update_overlayVisible: function(overlayVisible) {
+    this.getComponent('overlay').setVisibility(overlayVisible);
+  },
 
-    /**
-     * This demonstrates how to provide a custom state transition handler to avoid
-     * a full rerender.
-     */
-    update_overlayVisible: function(overlayVisible) {
-        this.getComponent('overlay').setVisibility(overlayVisible);
-    },
+  handleShowOverlayButtonClick: function() {
+    this.getComponent('overlay').show();
+  },
 
-    handleShowOverlayButtonClick: function() {
-        // this.setState('overlayVisible', true);
-        this.getComponent('overlay').show();
-    },
+  handleOverlayHide: function() {
+    // Synchronize the updated state of the overlay
+    this.setState('overlayVisible', false);
+  },
 
-    handleOverlayHide: function() {
-        // Synchronize the updated state of the o
-        this.setState('overlayVisible', false);
-    },
+  handleOverlayShow: function() {
+    this.setState('overlayVisible', true);
+  },
 
-    handleOverlayShow: function() {
-        this.setState('overlayVisible', true);
-    },
+  handleShowNotificationButtonClick: function() {
+    raptorPubsub.emit('notification', {
+      message: 'This is a notification'
+    });
+  },
 
-    handleShowNotificationButtonClick: function() {
-        raptorPubsub.emit('notification', {
-            message: 'This is a notification'
-        });
-    },
+  handleOverlayOk: function() {
+    raptorPubsub.emit('notification', {
+      message: 'You clicked the “Done” button!'
+    });
+  },
 
-    handleOverlayOk: function() {
-        raptorPubsub.emit('notification', {
-            message: 'You clicked the "Done" button!'
-        });
-    },
+  handleOverlayCancel: function() {
+    raptorPubsub.emit('notification', {
+      message: 'You clicked the “Cancel” button!'
+    });
+  },
 
-    handleOverlayCancel: function() {
-        raptorPubsub.emit('notification', {
-            message: 'You clicked the "Cancel" button!'
-        });
-    },
+  handleRenderButtonClick: function() {
+    button.renderSync({ label: 'Hello World' })
+      .appendTo(this.getEl('renderTarget'));
+  },
 
-    handleRenderButtonClick: function() {
-        button.renderSync({
-                label: 'Hello World'
-            })
-            .appendTo(this.getEl('renderTarget'));
-    },
+  handleRenderCheckboxButtonClick: function() {
+    checkbox.renderSync({
+        label: 'Hello World',
+        checked: true
+      })
+      .appendTo(this.getEl('renderTarget'));
+  },
 
-    handleRenderCheckboxButtonClick: function() {
-        checkbox.renderSync({
-                label: 'Hello World',
-                checked: true
-            })
-            .appendTo(this.getEl('renderTarget'));
-    },
+  handleRenderProgressBarButtonClick: function() {
+    progressBar.renderSync({
+        steps: [
+          { label: 'Step 1' },
+          { label: 'Step 2' },
+          {
+            label: 'Step 3',
+            active: true
+          },
+          { label: 'Step 4' }
+        ]
+      })
+      .appendTo(this.getEl('renderTarget'));
+  },
 
-    handleRenderProgressBarButtonClick: function() {
-        progressBar.renderSync({
-                steps: [
-                    {
-                        label: 'Step 1'
-                    },
-                    {
-                        label: 'Step 2'
-                    },
-                    {
-                        label: 'Step 3',
-                        active: true
-                    },
-                    {
-                        label: 'Step 4'
-                    }
-                ]
-            })
-            .appendTo(this.getEl('renderTarget'));
-    },
+  handleChangeButtonSizeClick: function() {
+    var nextButtonSize = buttonSizes[++currentButtonSize % buttonSizes.length];
+    this.state.buttonSize = nextButtonSize;
+  },
 
-    handleChangeButtonSizeClick: function() {
-        var nextButtonSize = buttonSizes[++currentButtonSize % buttonSizes.length];
-        this.state.buttonSize = nextButtonSize;
-    },
+  handleChangeButtonVariantClick: function() {
+    var nextButtonVariant = buttonVariants[++currentButtonVariant % buttonVariants.length];
+    this.state.buttonVariant = nextButtonVariant;
+  },
 
-    handleChangeButtonVariantClick: function() {
-        var nextButtonVariant = buttonVariants[++currentButtonVariant % buttonVariants.length];
-        this.state.buttonVariant = nextButtonVariant;
-    },
+  handleToggleCheckboxButtonClick: function() {
+    this.getComponent('toggleCheckbox').toggle();
+  },
 
-    handleToggleCheckboxButtonClick: function(event) {
-        var checkbox = this.getComponent('toggleCheckbox');
-        checkbox.toggle();
-    },
-
-    handleAddTabButtonClick: function() {
-        this.state.dynamicTabs = this.state.dynamicTabs.concat({
-            timestamp: '' + new Date()
-        });
-    }
+  handleAddTabButtonClick: function() {
+    this.state.dynamicTabs = this.state.dynamicTabs.concat({
+      timestamp: Date().toString()
+    });
+  }
 };

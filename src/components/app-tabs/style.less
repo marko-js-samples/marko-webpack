@@ -1,55 +1,36 @@
 @import "../../global-style/variables.less";
 
-.app-tabs .tab {
-
-}
-
-.app-tabs ul.tab-nav {
-    padding-left: 0;
+.tab-nav {
+    padding: 0;
     list-style: none;
 }
 
-.app-tabs ul.tab-nav > li {
+.tab {
     float: left;
 }
 
-.app-tabs ul.tab-nav > li > a {
-    margin-right: 2px;
-    line-height: 1.42857143;
-    border: 1px solid @button-secondary-bg;
+.tab + .tab {
     margin-left: 10px;
+}
+
+.tab-button {
+    line-height: 1.43;
+    border: 1px solid @button-secondary-bg;
     border-radius: 4px 4px 0 0;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-bottom: 0.5em;
-    padding-top: 0.5em;
-    display: inline-block;
+    padding: 0.5em 1em;
     margin-bottom: -1px;
-    background-color: @button-secondary-bg;
+    background: @button-secondary-bg;
     color: @button-secondary-fg;
 }
 
-.app-tabs ul.tab-nav > li:first-child > a {
-    margin-left: 0px;
-}
-
-.app-tabs .tab.active > a {
-    background-color: transparent;
-    border-bottom: 1px solid white;
+.tab-button.is-active {
+    background: none;
+    border-bottom-color: #fff;
     color: inherit;
 }
 
-.app-tabs .tab-panes {
+.tab-pane {
     clear: both;
-
-}
-
-.app-tabs .tab-pane {
-    display: none;
-    border: 1px solid  @button-secondary-bg;
+    border: 1px solid @button-secondary-bg;
     padding: 1em;
-}
-
-.app-tabs .tab-pane.active {
-    display: block;
 }

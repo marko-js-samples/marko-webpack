@@ -1,54 +1,33 @@
 import imgCO from "./CO.png";
 import imgCA from "./CA.png";
 
-static const states = [
-  {
-    name: "Colorado",
-    value: "CO",
-    img: imgCO
-  },
-  {
-    name: "California",
-    value: "CA",
-    img: imgCA
-  }
-];
+static const usStates = {
+  "Colorado": imgCO,
+  "California": imgCA
+};
 
 class {
   onInput() {
     this.state = {
-      stateIndex: null
+      choice: null
     };
   }
 
-  handleSelectChange(event, selectEl) {
-    if (selectEl.selectedIndex === 0) {
-      this.state.stateIndex = null;
-    } else {
-      this.state.stateIndex = selectEl.selectedIndex - 1;
-    }
+  handleSelectChange(_, { value }) {
+    this.state.choice = value;
   }
 }
 
-style {
-  .state-icon {
-    width: 75px;
-    height: 50px;
-  }
-}
-
-<div>
-  <h3>Choose a state</h3>
+<label>Choose a state
   <select onChange("handleSelectChange")>
-    <option value="" selected=(state.stateIndex == null)>(choose a state)</option>
-    <for|stateInfo, i| of=states>
-      <option value=stateInfo.value selected=(state.stateIndex === i)>
-        ${stateInfo.name}
-      </option>
+    <option disabled></option>
+    <for|name| in=usStates>
+      <option selected=(state.choice === name)>${name}</option>
     </for>
   </select>
-  <if(state.stateIndex != null)>
-    <div>You selected: ${states[state.stateIndex].value}</div>
-    <img src=states[state.stateIndex].img/>
-  </if>
-</div>
+</label>
+
+<if(state.choice)>
+  <p>You selected: ${state.choice}</p>
+  <img src=usStates[state.choice] width=75 height=50/>
+</if>
