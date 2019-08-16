@@ -17,16 +17,19 @@ class {
     this.state.value += delta;
   }
 
-  handleInputKeyUp(event) {
-    const newValue = event.target.value;
-    if (/^-?[0-9]+$/.test(newValue)) {
+  handleInputKeyUp({ target }) {
+    const newValue = target.value;
+    if (/^-?\d+$/.test(newValue)) {
       this.state.value = parseInt(newValue, 10);
     }
   }
 }
 
-<div class=["number-spinner", getClassNameForValue(state.value)]>
-  <button onClick("handleIncrementClick", -1)>-</button>
-  <input value=state.value size="4" onKeyUp("handleInputKeyUp")/>
-  <button onClick("handleIncrementClick", 1)>+</button>
-</div>
+<p.number-spinner>
+  <button.spinner-button onClick("handleIncrementClick", -1)>-</button>
+  <input.spinner-input class=getClassNameForValue(state.value)
+    value=state.value
+    size=4
+    onKeyUp("handleInputKeyUp")/>
+  <button.spinner-button onClick("handleIncrementClick", 1)>+</button>
+</p>
