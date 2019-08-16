@@ -1,6 +1,6 @@
 <div.app-overlay-mask class=(state.visible && "visible") onClick("handleMaskClick")/>
 
-<div.app-overlay-container class=(state.visible && "visible") style={ width: state.width }>
+<aside.app-overlay-container class=(state.visible && "visible") style={ width: state.width }>
   <div.app-overlay-body key="body">
     <${input}/>
   </div>
@@ -16,7 +16,7 @@
       size="large"
       onClick("handleDoneButtonClick")/>
   </div>
-</div>
+</aside>
 
 class {
   onInput({ visible, width = "80%" }) {

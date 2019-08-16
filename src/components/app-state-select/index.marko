@@ -18,14 +18,14 @@ class {
   }
 }
 
-<h3>Choose a state</h3>
-
-<select onChange("handleSelectChange")>
-  <option disabled></option>
-  <for|name| in=usStates>
-    <option selected=(state.choice === name)>${name}</option>
-  </for>
-</select>
+<label>Choose a state
+  <select onChange("handleSelectChange")>
+    <option disabled></option>
+    <for|name| in=usStates>
+      <option selected=(state.choice === name)>${name}</option>
+    </for>
+  </select>
+</label>
 
 <if(state.choice)>
   <p>You selected: ${state.choice}</p>

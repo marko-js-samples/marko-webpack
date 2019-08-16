@@ -4,8 +4,12 @@
   background: url("./loading.svg");
   width: 64px;
   height: 64px;
-  display: inline-block;
+  padding: 0;
   vertical-align: middle;
+
+  &::-moz-progress-bar { background: none }
+  &::-webkit-progress-bar { display: none }
+  &::-ms-fill { animation-name: none }
 }
 
 .table-container {

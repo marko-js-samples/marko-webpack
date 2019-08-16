@@ -27,6 +27,7 @@ class {
 
 <app-button.app-checkbox
   class=[ input["class"], state.checked && "app-checkbox--checked" ]
+  aria-pressed=state.checked.toString()
   onClick("handleClick")>
   <span.app-checkbox-icon/>
 

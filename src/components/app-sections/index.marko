@@ -6,7 +6,7 @@ static function getAnchorId(section) {
   return section.id;
 }
 
-<div.tableOfContents>
+<nav.tableOfContents role="directory">
   <ul>
     <for|section| of=input.sections>
       <li>
@@ -14,13 +14,11 @@ static function getAnchorId(section) {
       </li>
     </for>
   </ul>
-</div>
+</nav>
 
 <for|section| of=input.sections>
-  <div.section>
+  <section.section>
     <h2.section-head id=getAnchorId(section)>${section.title}</h2>
-    <div.section-body>
-      <${section}/>
-    </div>
-  </div>
+    <${section}/>
+  </section>
 </for>

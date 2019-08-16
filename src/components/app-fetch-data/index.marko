@@ -58,18 +58,18 @@ class {
     <table>
       <thead>
         <tr>
-          <td>ID</td>
-          <td>Avatar</td>
-          <td>Name</td>
-          <td>Email</td>
+          <th>ID</th>
+          <th>Avatar</th>
+          <th>Name</th>
+          <th>Email</th>
         </tr>
       </thead>
       <tbody>
         <for|user| of=state.users>
           <tr>
-            <td>${user.id}</td>
+            <th>${user.id}</th>
             <td>
-              <img src=user.avatar width=50 height=50/>
+              <img src=user.avatar width=50 height=50 alt=""/>
             </td>
             <td>${user.firstName} ${user.lastName}</td>
             <td>${user.email}</td>
@@ -83,4 +83,7 @@ class {
 <app-button
   label=`Load ${state.users.length ? "more " : ""}users`
   onClick("handleLoadMoreClick")/>
-<span class=[state.loading ? "app-fetch-data-loading" : null]/>
+
+<if(state.loading)>
+  <progress.app-fetch-data-loading/>
+</if>
