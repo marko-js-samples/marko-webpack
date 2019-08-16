@@ -1,11 +1,10 @@
 <h1>Hello!</h1>
+
 <app-sections>
   <@section title="Buttons">
     <table>
       <tr>
-        <td>
-          <b>Primary:</b>
-        </td>
+        <th>Primary:</th>
         <td>
           <app-button label="small" size="small"/>
           <app-button label="normal"/>
@@ -13,9 +12,7 @@
         </td>
       </tr>
       <tr>
-        <td>
-          <b>Secondary:&nbsp;</b>
-        </td>
+        <th>Secondary:&nbsp;</th>
         <td>
           <app-button label="small" size="small" variant="secondary"/>
           <app-button label="normal" variant="secondary"/>
@@ -27,43 +24,35 @@
     <app-button
       label=`Change Button Size - ${state.buttonSize}`
       size=state.buttonSize
-
       onClick("handleChangeButtonSizeClick")/>
     <app-button
       label=`Change Button Variant - ${state.buttonVariant}`
       variant=state.buttonVariant
       onClick("handleChangeButtonVariantClick")/>
   </@section>
+
   <@section title="Checkboxes">
     <p>
       <app-checkbox
         label="Foo"
-        data={
-          name: "foo"
-        }
+        data={ name: "foo" }
         checked=state.checked.foo
         onToggle("handleCheckboxToggle")/>
       <app-checkbox
         label="Bar"
-        data={
-          name: "bar"
-        }
+        data={ name: "bar" }
         checked=state.checked.bar
         onToggle("handleCheckboxToggle")/>
       <app-checkbox
         label="Baz"
-        data={
-          name: "baz"
-        }
+        data={ name: "baz" }
         checked=state.checked.baz
         onToggle("handleCheckboxToggle")/>
     </p>
     <p>
       <app-checkbox
         label="Bar"
-        data={
-          name: "bar"
-        }
+        data={ name: "bar" }
         checked=state.checked.bar
         onToggle("handleCheckboxToggle")/>
     </p>
@@ -81,25 +70,21 @@
       <app-checkbox
         label="Foo"
         checked
-        data={
-          name: "foo"
-        }
+        data={ name: "foo" }
         key="toggleCheckbox"/>
       <app-button
         label="Toggle Checkbox"
         size="small"
-
         onClick("handleToggleCheckboxButtonClick")/>
     </p>
   </@section>
+
   <@section title="Overlays">
     <app-button
       label="Show Overlay"
-
       onClick("handleShowOverlayButtonClick")/>
     <app-button
       label="Show Notification"
-
       onClick("handleShowNotificationButtonClick")/>
     <app-notifications key="notifications" no-update/>
     <app-overlay
@@ -113,6 +98,7 @@
       This is an overlay!
     </app-overlay>
   </@section>
+
   <@section title="Tabs">
     <h3>Static tabs</h3>
     <app-tabs>
@@ -120,6 +106,7 @@
       <@tab label="Profile">Content for Profile</@tab>
       <@tab label="Messages">Content for Messages</@tab>
     </app-tabs>
+
     <h3>Dynamic tabs</h3>
     <app-tabs>
       <for|tabIndex, tab| in=state.dynamicTabs>
@@ -130,6 +117,7 @@
     </app-tabs>
     <app-button label="Add Tab" onClick("handleAddTabButtonClick")/>
   </@section>
+
   <@section title="Miscellaneous">
     <app-progress-bar>
       <@step name="contact-info">Contact Info</@step>
@@ -141,6 +129,7 @@
     <br/>
     <app-state-select/>
   </@section>
+
   <@section title="Client-side Rendering">
     <app-button label="Render a button" onClick("handleRenderButtonClick")/>
     <app-button label="Render a checkbox" onClick("handleRenderCheckboxButtonClick")/>
@@ -149,9 +138,11 @@
       onClick("handleRenderProgressBarButtonClick")/>
     <div key="renderTarget" class="render-target" no-update-body/>
   </@section>
+
   <@section title="Fetch data">
     <app-fetch-data no-update/>
   </@section>
+
   <@section title="Markdown">
     <app-markdown>
       ---
