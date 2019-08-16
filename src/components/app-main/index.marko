@@ -8,9 +8,9 @@
             <b>Primary:</b>
           </td>
           <td>
-            <app-button label="small" size="small" variant="primary"/>
-            <app-button label="normal" size="normal" variant="primary"/>
-            <app-button label="large" size="large" variant="primary"/>
+            <app-button label="small" size="small"/>
+            <app-button label="normal"/>
+            <app-button label="large" size="large"/>
           </td>
         </tr>
         <tr>
@@ -19,7 +19,7 @@
           </td>
           <td>
             <app-button label="small" size="small" variant="secondary"/>
-            <app-button label="normal" size="normal" variant="secondary"/>
+            <app-button label="normal" variant="secondary"/>
             <app-button label="large" size="large" variant="secondary"/>
           </td>
         </tr>
@@ -28,7 +28,7 @@
         <app-button
           label=`Change Button Size - ${state.buttonSize}`
           size=state.buttonSize
-          variant="primary"
+
           onClick("handleChangeButtonSizeClick")/>
         <app-button
           label=`Change Button Variant - ${state.buttonVariant}`
@@ -90,18 +90,18 @@
         <app-button
           label="Toggle Checkbox"
           size="small"
-          variant="primary"
+
           onClick("handleToggleCheckboxButtonClick")/>
       </p>
     </@section>
     <@section title="Overlays">
       <app-button
         label="Show Overlay"
-        variant="primary"
+
         onClick("handleShowOverlayButtonClick")/>
       <app-button
         label="Show Notification"
-        variant="primary"
+
         onClick("handleShowNotificationButtonClick")/>
       <app-notifications key="notifications" no-update/>
       <app-overlay

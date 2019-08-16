@@ -26,7 +26,7 @@ class {
 }
 
 <div class=["number-spinner", getClassNameForValue(state.value)]>
-  <button type="button" onClick("handleIncrementClick", -1)>-</button>
-  <input type="text" value=state.value size="4" onKeyUp("handleInputKeyUp")/>
-  <button type="button" onClick("handleIncrementClick", 1)>+</button>
+  <button onClick("handleIncrementClick", -1)>-</button>
+  <input value=state.value size="4" onKeyUp("handleInputKeyUp")/>
+  <button onClick("handleIncrementClick", 1)>+</button>
 </div>
