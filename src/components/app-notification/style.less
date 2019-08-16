@@ -5,19 +5,15 @@
 
 .app-notification {
   opacity: 0;
+  transition: 0.3s ease-out;
   transition-property: max-height, opacity;
-  transition-duration: 0.3s;
-  transition-timing-function: ease-out;
-  max-height: 0px;
+  max-height: 0;
   margin-top: 8px;
-  background-color: @notification-bg;
-  color: white;
+  background: @notification-bg;
+  color: #fff;
   width: 100%;
   border: 2px solid @notification-border-color;
-  padding-left: 1em;
-  padding-right: 1em;
-  line-height: 40px;
-  vertical-align: middle;
+  padding: 0.25em 1em;
   border-radius: 4px;
   box-shadow: 3px 3px 3px rgba(51, 65, 80, 0.35);
 }

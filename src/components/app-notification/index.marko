@@ -1,22 +1,22 @@
 class {
-  onInput(input) {
+  onInput({ message, timeout }) {
     this.state = {
-      timeout: input.timeout,
-      message: input.message
+      timeout,
+      message
     };
   }
 
   onMount() {
     setTimeout(() => {
-      this.el.style.opacity = 1;
+      this.el.style.opacity = "1";
       this.el.style.maxHeight = "60px";
     }, 10);
   }
 
   fadeOut(callback) {
-    this.el.style.opacity = 0;
+    this.el.style.opacity = "0";
     setTimeout(callback, 300);
   }
 }
 
-<div class="app-notification">$!{data.message}</div>
+<div.app-notification>$!{data.message}</div>
