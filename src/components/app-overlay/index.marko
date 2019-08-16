@@ -1,24 +1,74 @@
-<div class=["app-overlay", state.visible && "visible"]>
-  <div class="app-overlay-mask" onClick("handleMaskClick")/>
-  <div
-    class="app-overlay-container"
-    style={
-      width: state.width
-    }>
-    <div class="app-overlay-body" key="body">
-      <${input}/>
-    </div>
-    <div class="app-overlay-footer">
-      <app-button
-        label="Cancel"
-        size="large"
-        variant="secondary"
-        onClick("handleCancelButtonClick")/>
-      <app-button
-        label="Done"
-        size="large"
-        variant="primary"
-        onClick("handleDoneButtonClick")/>
-    </div>
+<div.app-overlay-mask class=(state.visible && "visible") onClick("handleMaskClick")/>
+
+<div.app-overlay-container class=(state.visible && "visible") style={ width: state.width }>
+  <div.app-overlay-body key="body">
+    <${input}/>
+  </div>
+
+  <div.app-overlay-footer>
+    <app-button
+      label="Cancel"
+      size="large"
+      variant="secondary"
+      onClick("handleCancelButtonClick")/>
+    <app-button
+      label="Done"
+      size="large"
+      onClick("handleDoneButtonClick")/>
   </div>
 </div>
+
+class {
+  onInput({ visible, width = "80%" }) {
+    this.state = {
+      width,
+      visible
+    };
+  }
+
+  onMount() {
+    this.fixPageScrolling();
+  }
+  onUpdate() {
+    this.fixPageScrolling();
+  }
+
+  fixPageScrolling() {
+    document.body.style.overflow = this.state.visible ? "hidden" : "";
+  }
+
+  hide() {
+    this.setVisibility(false);
+  }
+  show() {
+    this.setVisibility(true);
+  }
+
+  setVisibility(visible) {
+    if (this.state.visible === visible) {
+      return; // Visibility did not change… nothing to do
+    }
+
+    this.emit(visible ? "show" : "hide");
+    this.state.visible = visible;
+  }
+
+  handleMaskClick() {
+    this.hide();
+  }
+  handleCancelButtonClick() {
+    this.emit("cancel", {});
+    this.hide();
+  }
+  handleDoneButtonClick() {
+    let preventDefault = false;
+
+    this.emit("ok", {
+      preventDefault: () => preventDefault = true
+    });
+
+    if (!preventDefault) {
+      this.hide();
+    }
+  }
+}
