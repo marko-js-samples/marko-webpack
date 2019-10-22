@@ -103,7 +103,8 @@ function compiler(config) {
           loader: "file-loader",
           options: {
             // File assets from server & browser compiler output to client folder.
-            outputPath: "../client"
+            outputPath: '../client',
+            publicPath: '/static'
           }
         }
       ]
