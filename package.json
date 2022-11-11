@@ -28,9 +28,9 @@
     "mini-css-extract-plugin": "^0.8.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "spawn-server-webpack-plugin": "^4.0.0",
-    "svg-url-loader": "^3.0.0",
+    "svg-url-loader": "^8.0.0",
     "webpack": "^4.36.1",
-    "webpack-cli": "^3.3.6",
+    "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.7.2"
   },
   "homepage": "https://github.com/marko-js-samples/marko-webpack",
